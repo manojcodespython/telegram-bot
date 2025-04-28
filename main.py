@@ -1,4 +1,4 @@
-rom telethon import TelegramClient, events
+from telethon import TelegramClient, events
 
 api_id = 10705683
 api_hash = '7844949a3031003987ea51e99177ad70'  
