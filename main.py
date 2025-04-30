@@ -1,26 +1,26 @@
 from telethon import TelegramClient, events
+import os
 import asyncio
 
-api_id = 10705683
-api_hash = '7844949a3031003987ea51e99177ad70'
-
-source_channel = -1001639730549
-target_channel = -1002262569774
+# Read credentials and IDs from environment variables
+api_id = int(os.environ.get("API_ID"))
+api_hash = os.environ.get("API_HASH")
+source_channel = int(os.environ.get("SOURCE_CHANNEL"))
+target_channel = int(os.environ.get("TARGET_CHANNEL"))
 
 client = TelegramClient('forwarder_session', api_id, api_hash)
 
 @client.on(events.NewMessage(chats=source_channel))
 async def handler(event):
     try:
-        await client.send_message(target_channel, event.message.message)
-        print(f"✅ Forwarded from {source_channel} to {target_channel}")
+        await client.send_message(target_channel, event.message)
+        print("✅ Message forwarded!")
     except Exception as e:
-        print(f"❌ Error forwarding: {e}")
+        print("❌ Error:", e)
 
-async def run_bot():
+async def main():
     await client.start()
-    print("🚀 Forwarder Bot is running and listening...")
+    print("🚀 Bot is running and listening...")
     await client.run_until_disconnected()
 
-if __name__ == "__main__":
-    asyncio.run(run_bot())
+asyncio.run(main())
