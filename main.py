@@ -1,4 +1,5 @@
 from telethon import TelegramClient, events
+import asyncio
 
 api_id = 10705683
 api_hash = '7844949a3031003987ea51e99177ad70'
@@ -16,9 +17,10 @@ async def handler(event):
     except Exception as e:
         print(f"❌ Error forwarding: {e}")
 
-async def main():
+async def run_bot():
     await client.start()
     print("🚀 Forwarder Bot is running and listening...")
     await client.run_until_disconnected()
 
-client.loop.run_until_complete(main())
+if __name__ == "__main__":
+    asyncio.run(run_bot())
